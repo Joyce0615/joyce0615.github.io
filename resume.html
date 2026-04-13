@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joyce Xie — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --violet: #6d28d9;
+      --violet-light: #8b5cf6;
+      --text: #111827;
+      --muted: #6b7280;
+      --light: #f3f4f6;
+      --border: #e5e7eb;
+      --accent-bg: #f5f3ff;
+    }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: var(--text);
+      background: #fff;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 48px;
+    }
+
+    /* ── Header ── */
+    .header { border-bottom: 2.5px solid var(--violet); padding-bottom: 14px; margin-bottom: 18px; }
+    .header h1 { font-size: 26pt; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; }
+    .header .title { font-size: 13pt; font-weight: 600; color: var(--violet-light); margin-top: 3px; margin-bottom: 8px; }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 14px; font-size: 9pt; color: var(--muted); }
+    .contact-row a { color: var(--violet); text-decoration: none; }
+    .contact-row a:hover { text-decoration: underline; }
+    .contact-sep { color: var(--border); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 18px; }
+    .section-title {
+      font-size: 8.5pt; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--violet);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px; margin-bottom: 10px;
+    }
+
+    /* ── Summary ── */
+    .summary { font-size: 10pt; color: #374151; line-height: 1.6; }
+
+    /* ── Skills grid ── */
+    .skills-grid { display: grid; grid-template-columns: 150px 1fr; gap: 5px 12px; font-size: 9.5pt; }
+    .skill-cat { font-weight: 600; color: var(--text); }
+    .skill-val { color: #374151; }
+
+    /* ── Experience & Project entries ── */
+    .entry { margin-bottom: 14px; }
+    .entry-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; }
+    .entry-title { font-weight: 700; font-size: 10.5pt; color: var(--text); }
+    .entry-date { font-size: 9pt; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    .entry-subtitle { font-size: 9.5pt; color: var(--violet-light); font-weight: 500; margin-bottom: 5px; }
+    .entry-subtitle .stack { color: var(--muted); font-weight: 400; }
+    ul.bullets { padding-left: 16px; }
+    ul.bullets li { font-size: 9.5pt; color: #374151; margin-bottom: 3px; line-height: 1.5; }
+    ul.bullets li::marker { color: var(--violet-light); }
+
+    /* ── Project header with tags ── */
+    .project-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .ptag {
+      font-size: 7.5pt; padding: 1.5px 7px; border-radius: 999px;
+      font-weight: 600; letter-spacing: 0.02em;
+    }
+    .ptag-violet { background: var(--accent-bg); color: var(--violet); border: 1px solid #ddd6fe; }
+    .ptag-gray { background: #f9fafb; color: #4b5563; border: 1px solid var(--border); }
+
+    /* ── Featured project box ── */
+    .featured {
+      background: var(--accent-bg);
+      border: 1px solid #ddd6fe;
+      border-left: 3px solid var(--violet);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+    .featured .entry-title { color: var(--violet); }
+
+    /* ── Scale badge ── */
+    .scale-badge { font-size: 8pt; color: var(--muted); font-style: italic; margin-top: 2px; }
+
+    /* ── Education ── */
+    .edu-entry { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; margin-bottom: 2px; }
+    .edu-entry .school { font-weight: 700; }
+    .edu-gpa { font-size: 9pt; font-weight: 600; color: var(--violet); }
+    .edu-degree { font-size: 9.5pt; color: #374151; }
+    .edu-date { font-size: 9pt; color: var(--muted); }
+
+    /* ── Print ── */
+    @media print {
+      body { padding: 28px 36px; font-size: 10pt; }
+      .no-print { display: none; }
+    }
+
+    /* ── Print button ── */
+    .print-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--violet); color: white;
+      border: none; padding: 10px 20px; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(109,40,217,0.4);
+      transition: all 0.2s;
+    }
+    .print-btn:hover { background: #5b21b6; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <div class="header">
+    <h1>Dongjun (Joyce) Xie</h1>
+    <div class="title">AI Agent Engineer</div>
+    <div class="contact-row">
+      <span>📞 +1 (949) 293-3054</span>
+      <span class="contact-sep">|</span>
+      <span>📍 California</span>
+      <span class="contact-sep">|</span>
+      <a href="mailto:joycexie0615@gmail.com">📧 joycexie0615@gmail.com</a>
+      <span class="contact-sep">|</span>
+      <a href="https://www.linkedin.com/in/dongjun-xie-1b10b8172/" target="_blank">🔗 LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- ── SUMMARY ── -->
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <p class="summary">
+      AI Agent Engineer with a proven track record building production-grade multi-agent systems and LLM-powered applications
+      from the ground up. Expertise in context engineering, prompt architecture design, memory lifecycle management, and
+      multi-agent orchestration. Built two full-stack AI agent applications solo — 14,000+ lines of TypeScript/Python —
+      applying advanced patterns including cache-aware prompt assembly, token budget allocation, 4-stage context compression,
+      and fail-closed tool governance. Strong cloud foundations across AWS and GCP with 4.0 GPA in Computer Science.
+    </p>
+  </div>
+
+  <!-- ── TECHNICAL SKILLS ── -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <span class="skill-cat">AI & Agents:</span>
+      <span class="skill-val">Multi-Agent Orchestration, Context Engineering, Prompt Architecture, Agentic Workflows, LLM Application Development, RAG Pipelines, Memory Systems, Streaming LLMs, Vercel AI SDK, LangChain, LangGraph, Ollama, NVIDIA Inference Hub, OpenAI API</span>
+
+      <span class="skill-cat">Languages:</span>
+      <span class="skill-val">TypeScript, Python, JavaScript, Java, Swift, SQL, HTML/CSS</span>
+
+      <span class="skill-cat">Frameworks:</span>
+      <span class="skill-val">Next.js, React, React Native, FastAPI, Flask, Django, Node.js, Express.js, Prisma, Tailwind CSS, Redux, Bootstrap, Streamlit</span>
+
+      <span class="skill-cat">Cloud & Infra:</span>
+      <span class="skill-val">AWS (CDK, Lambda, SQS, DynamoDB, CloudWatch), GCP, Firebase, Docker, MongoDB Atlas, Redis, Elasticsearch, Azure</span>
+
+      <span class="skill-cat">Databases:</span>
+      <span class="skill-val">PostgreSQL, MySQL, MongoDB, SQLite, Firestore, DynamoDB</span>
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+
+    <!-- Solopreneur Team (FEATURED) -->
+    <div class="featured entry">
+      <div class="entry-header">
+        <div class="entry-title">Solopreneur Team — Multi-Agent AI Platform</div>
+        <div class="entry-date">Feb 2026 – Apr 2026</div>
+      </div>
+      <div class="entry-subtitle">
+        Next.js 16 · TypeScript · Vercel AI SDK v6 · SQLite · Tailwind CSS
+        <span class="scale-badge">Solo build · 88 source files · ~10,500 LOC · 5 specialized agents</span>
+      </div>
+      <div class="project-tags">
+        <span class="ptag ptag-violet">Multi-Agent Orchestration</span>
+        <span class="ptag ptag-violet">Context Engineering</span>
+        <span class="ptag ptag-violet">Tool Governance</span>
+        <span class="ptag ptag-gray">Full-Stack AI</span>
+      </div>
+      <ul class="bullets" style="margin-top:7px">
+        <li>Architected a platform where 5 specialized AI agents (Marketer, Designer, Bookkeeper, Support, Sales) collaboratively handle project work with per-agent personas, tool sets, memory scoping, and permission boundaries</li>
+        <li>Engineered <strong>cache-aware prompt assembly</strong> with a SYSTEM_PROMPT_DYNAMIC_BOUNDARY split — static sections (~4K tokens) cached across requests, dynamic sections injected per call — reducing latency and inference cost</li>
+        <li>Built a <strong>4-stage context compression pipeline</strong> (snip → micro-summarize → collapse → drop) activated at 80% token budget to prevent agent amnesia mid-conversation across long sessions</li>
+        <li>Designed <strong>fail-closed tool governance</strong>: every tool defaults to requiresApproval=true, enforces an agent-type whitelist, runs Zod schema validation on invocation, and returns structured ToolResult with error context</li>
+        <li>Implemented <strong>multi-provider LLM abstraction</strong> via Vercel AI SDK v6 — unified interface across OpenAI, Anthropic, and Gemini; swap model providers per agent without code changes</li>
+        <li>Designed explicit token budget allocation across sections (system: 4K, tools: 8K, memory: 4K, conversation: 180K) with proportional scaling for smaller context windows</li>
+      </ul>
+    </div>
+
+    <!-- AI Diary Companion (FEATURED) -->
+    <div class="featured entry">
+      <div class="entry-header">
+        <div class="entry-title">AI Diary Companion — LLM Character System</div>
+        <div class="entry-date">Jan 2026 – Mar 2026</div>
+      </div>
+      <div class="entry-subtitle">
+        Next.js 14+ · TypeScript · Prisma + SQLite · NVIDIA Inference Hub · Tailwind CSS
+        <span class="scale-badge">Solo build · 38 source files · ~3,500 LOC · 6 character types</span>
+      </div>
+      <div class="project-tags">
+        <span class="ptag ptag-violet">Prompt Architecture</span>
+        <span class="ptag ptag-violet">Memory Lifecycle</span>
+        <span class="ptag ptag-violet">Streaming LLM</span>
+        <span class="ptag ptag-gray">Full-Stack AI</span>
+      </div>
+      <ul class="bullets" style="margin-top:7px">
+        <li>Built a full-stack AI journal where users choose character companions (therapist, philosopher, coach, artist) for daily conversations; character listens in-persona and composes diary entries in the user's own voice</li>
+        <li>Engineered <strong>layered prompt architecture</strong> with static/dynamic separation: character identity + norms + safety boundaries (cacheable) assembled separately from per-session memories, diary summaries, and context</li>
+        <li>Implemented <strong>character behavior codification</strong> — characters defined as 3-layer behavioral specs (identity, personality, voice style) to prevent model drift over extended conversation sessions</li>
+        <li>Designed <strong>memory lifecycle management</strong>: incremental extraction after each chat + weekly AI-powered consolidation; memories importance-scored (1–5) and injected with natural-language timestamps for organic continuity</li>
+        <li>Built <strong>conversation windowing</strong> (last 20 messages in context), structured JSON output parsing for diary generation, and streaming harness with error recovery for reliable third-party inference API integration</li>
+        <li>Delivered full feature set: calendar view with mood tracking, semantic search, mood analytics dashboard, custom character creation, export to Markdown, and inline diary editing</li>
+      </ul>
+    </div>
+
+    <!-- PlanCanvas -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">PlanCanvas — AI Architecture Design Tool</div>
+        <div class="entry-date">Jan 2025 – Jun 2025</div>
+      </div>
+      <div class="entry-subtitle">FastAPI · LangGraph · LangChain · GPT-4 · RAG · React · TypeScript · Excalidraw</div>
+      <ul class="bullets">
+        <li>Built Python orchestration layer using FastAPI, LangChain, and GPT-4 that autonomously plans, iteratively refines, and logs architecture designs in real time with minimal human intervention</li>
+        <li>Integrated RAG pipeline grounding design suggestions in architectural best practices; combined React + TypeScript + Excalidraw to dynamically render AI-generated system architecture diagrams</li>
+      </ul>
+    </div>
+
+    <!-- Serverless Pipeline -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Serverless Data Pipeline Infrastructure</div>
+        <div class="entry-date">May 2025 – Aug 2025</div>
+      </div>
+      <div class="entry-subtitle">AWS CDK · Lambda · SQS · DynamoDB · CloudWatch</div>
+      <ul class="bullets">
+        <li>Architected fully serverless, event-driven pipeline using AWS CDK with reusable IaC modules; orchestrated inter-service communication connecting async compute flows with persistent storage and observability layers</li>
+      </ul>
+    </div>
+
+    <!-- LLM Research Reg -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">LLM-Empowered Research Registration System</div>
+        <div class="entry-date">Aug 2024 – Dec 2024</div>
+      </div>
+      <div class="entry-subtitle">TypeScript · Django · Redis · Elasticsearch · GCP · Docker</div>
+      <ul class="bullets">
+        <li>Engineered scalable research registration system deployed on GCP with Docker, Redis, and Elasticsearch; achieved 99.9% uptime and auto-scaling across thousands of concurrent research projects</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PROFESSIONAL EXPERIENCE ── -->
+  <div class="section">
+    <div class="section-title">Professional Experience</div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Full-Stack Software Developer Intern</div>
+        <div class="entry-date">Jan 2025 – Apr 2025</div>
+      </div>
+      <div class="entry-subtitle">1 Thing Against Racism Organization · Monroe, NJ (Remote) <span class="stack">| Python · Flask · Firebase · GCP</span></div>
+      <ul class="bullets">
+        <li>Designed and optimized back-end systems for the Hate Crime Tracker app; implemented advanced caching mechanisms reducing response times by <strong>40%</strong> for frequent queries</li>
+        <li>Streamlined social media publishing by integrating Twitter and LinkedIn APIs, enabling automated dissemination of verified incident reports</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Full-Stack Software Developer Intern</div>
+        <div class="entry-date">Jan 2024 – Apr 2024</div>
+      </div>
+      <div class="entry-subtitle">1 Thing Against Racism Organization · Monroe, NJ (Remote) <span class="stack">| TypeScript · React · React Native · Firebase</span></div>
+      <ul class="bullets">
+        <li>Directed development of a cross-platform app (React + React Native) serving <strong>100,000+ users</strong> on Android and iOS; engineered Redux state management + Firestore real-time sync</li>
+        <li>Embedded AI-powered content moderation reducing manual intervention by <strong>30%</strong>; implemented OAuth authentication protecting sensitive user data</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── EDUCATION ── -->
+  <div class="section">
+    <div class="section-title">Education</div>
+
+    <div style="margin-bottom: 8px;">
+      <div class="edu-entry">
+        <span class="school">Northeastern University</span>
+        <span class="edu-date">Sep 2022 – Aug 2025 · San Jose, CA</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap;">
+        <span class="edu-degree">Master of Science in Computer Science</span>
+        <span class="edu-gpa">GPA: 4.0 / 4.0</span>
+      </div>
+      <div style="font-size:9pt; color:#6b7280; margin-top:2px;">Relevant Courses: Fundamental Cloud Computing, Database Management, Web Development, iOS Mobile Development</div>
+    </div>
+
+    <div>
+      <div class="edu-entry">
+        <span class="school">University of California, Irvine</span>
+        <span class="edu-date">Sep 2015 – Mar 2019 · Irvine, CA</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap;">
+        <span class="edu-degree">Bachelor of Arts in Quantitative Economics</span>
+        <span class="edu-gpa">GPA: 3.5 / 4.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Button -->
+  <button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+</body>
+</html>

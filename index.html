@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joyce Xie | AI Agent Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            navy: { 950: '#05050f', 900: '#080818', 800: '#0d1025', 700: '#111837' },
+            violet: { 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' },
+            sky: { 400: '#38bdf8', 500: '#0ea5e9' },
+            cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body { background-color: #080818; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+    /* ── Gradient mesh background ── */
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 20% 30%, rgba(124,58,237,0.25) 0%, transparent 60%),
+                  radial-gradient(ellipse 70% 50% at 80% 70%, rgba(6,182,212,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 70% at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 70%),
+                  #080818;
+    }
+    .section-bg { background: #080818; }
+    .card-bg { background: rgba(13,16,37,0.8); border: 1px solid rgba(255,255,255,0.07); }
+    .card-bg:hover { border-color: rgba(124,58,237,0.4); }
+
+    /* ── Gradient text ── */
+    .gradient-text {
+      background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #22d3ee 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .gradient-text-warm {
+      background: linear-gradient(135deg, #f472b6 0%, #a78bfa 50%, #38bdf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── Glassmorphism nav ── */
+    .nav-glass {
+      background: rgba(8,8,24,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── Glow effects ── */
+    .glow-violet { box-shadow: 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.1); }
+    .glow-cyan { box-shadow: 0 0 40px rgba(6,182,212,0.25), 0 0 80px rgba(6,182,212,0.08); }
+    .btn-glow { box-shadow: 0 4px 20px rgba(124,58,237,0.45); transition: all 0.3s; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(124,58,237,0.65); transform: translateY(-2px); }
+
+    /* ── Tag pill ── */
+    .tag { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; font-family: 'JetBrains Mono', monospace; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #a78bfa; white-space: nowrap; }
+    .tag-cyan { background: rgba(6,182,212,0.12); border-color: rgba(6,182,212,0.3); color: #67e8f9; }
+    .tag-blue { background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.3); color: #93c5fd; }
+
+    /* ── Screenshot carousel ── */
+    .carousel { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+    .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+    .carousel-slide { min-width: 100%; }
+    .carousel-slide img { width: 100%; height: 320px; object-fit: cover; object-position: top; display: block; }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(8,8,24,0.75); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12); color: #f1f5f9;
+      width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; z-index: 10; font-size: 16px;
+    }
+    .carousel-btn:hover { background: rgba(124,58,237,0.5); border-color: rgba(124,58,237,0.6); }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 6px; padding: 10px 0 4px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s; }
+    .dot.active { background: #8b5cf6; width: 18px; border-radius: 3px; }
+
+    /* ── Fade-in animation ── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Skill bar ── */
+    .skill-bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .skill-fill { height: 100%; border-radius: 2px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+    /* ── Timeline ── */
+    .timeline-line { border-left: 2px solid rgba(124,58,237,0.3); }
+    .timeline-dot { width: 12px; height: 12px; background: #7c3aed; border-radius: 50%; position: absolute; left: -7px; top: 6px; box-shadow: 0 0 10px rgba(124,58,237,0.6); }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #080818; }
+    ::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.7); }
+
+    /* ── Section divider ── */
+    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), transparent); }
+
+    /* ── Floating badge ── */
+    .float-badge {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ── Grid pattern overlay ── */
+    .grid-overlay {
+      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Project card hover ── */
+    .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .project-card:hover { transform: translateY(-4px); }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav id="nav" class="fixed top-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-bold text-lg gradient-text tracking-tight">Joyce Xie</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+        <a href="resume.html" target="_blank"
+           class="px-4 py-2 rounded-lg bg-violet-600 text-white text-sm font-semibold btn-glow">
+          Resume
+        </a>
+      </div>
+      <!-- Mobile menu btn -->
+      <button id="mobile-btn" class="md:hidden text-slate-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden nav-glass px-6 pb-4">
+      <div class="flex flex-col gap-4 text-sm font-medium text-slate-400 pt-2">
+        <a href="#about" class="hover:text-white">About</a>
+        <a href="#projects" class="hover:text-white">Projects</a>
+        <a href="#skills" class="hover:text-white">Skills</a>
+        <a href="#experience" class="hover:text-white">Experience</a>
+        <a href="#contact" class="hover:text-white">Contact</a>
+        <a href="resume.html" target="_blank" class="text-violet-400 font-semibold">View Resume</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════ HERO ════════════════ -->
+  <section id="home" class="hero-bg grid-overlay min-h-screen flex items-center pt-20">
+    <div class="max-w-6xl mx-auto px-6 py-20 w-full">
+      <div class="max-w-3xl">
+        <!-- Status badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-8 fade-in"
+             style="background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c4b5fd;">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Open to AI Agent Engineer roles · California
+        </div>
+
+        <!-- Main heading -->
+        <h1 class="text-6xl md:text-7xl font-black leading-none tracking-tight mb-6 fade-in" style="transition-delay:0.1s">
+          <span class="text-white">Joyce</span><br/>
+          <span class="gradient-text">Xie</span>
+        </h1>
+
+        <div class="text-2xl md:text-3xl font-semibold text-slate-300 mb-6 fade-in" style="transition-delay:0.15s">
+          AI Agent Engineer
+        </div>
+
+        <p class="text-lg text-slate-400 leading-relaxed max-w-2xl mb-10 fade-in" style="transition-delay:0.2s">
+          I build multi-agent AI systems from the ground up — designing prompt architectures,
+          engineering memory pipelines, and shipping full-stack LLM applications that work
+          reliably in production. Specializing in context engineering, agent orchestration, and
+          agentic workflow design.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap gap-4 mb-16 fade-in" style="transition-delay:0.25s">
+          <a href="#projects"
+             class="px-6 py-3 rounded-xl bg-violet-600 text-white font-semibold btn-glow text-sm">
+            View Projects →
+          </a>
+          <a href="resume.html" target="_blank"
+             class="px-6 py-3 rounded-xl font-semibold text-sm transition-all"
+             style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: #e2e8f0;"
+             onmouseover="this.style.borderColor='rgba(124,58,237,0.5)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+            Download Resume
+          </a>
+          <a href="mailto:joycexie0615@gmail.com"
+             class="px-6 py-3 rounded-xl font-semibold text-sm transition-all"
+             style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: #e2e8f0;"
+             onmouseover="this.style.borderColor='rgba(6,182,212,0.5)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">
+            Get in Touch
+          </a>
+        </div>
+
+        <!-- Floating stat badges -->
+        <div class="flex flex-wrap gap-4 fade-in" style="transition-delay:0.3s">
+          <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:0s">
+            <div class="text-2xl font-black gradient-text">2</div>
+            <div class="text-xs text-slate-500 mt-0.5">AI Agent Apps</div>
+          </div>
+          <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:0.5s">
+            <div class="text-2xl font-black gradient-text">14K+</div>
+            <div class="text-xs text-slate-500 mt-0.5">Lines of Code</div>
+          </div>
+          <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:1s">
+            <div class="text-2xl font-black gradient-text">4.0</div>
+            <div class="text-xs text-slate-500 mt-0.5">GPA · NEU MSCS</div>
+          </div>
+          <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:1.5s">
+            <div class="text-2xl font-black gradient-text">5</div>
+            <div class="text-xs text-slate-500 mt-0.5">Specialized Agents</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════ ABOUT ════════════════ -->
+  <section id="about" class="section-bg py-24 grid-overlay">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="fade-in">
+          <p class="text-xs font-semibold tracking-widest text-violet-400 uppercase mb-3">About Me</p>
+          <h2 class="text-4xl font-black text-white mb-6 leading-tight">Engineering AI <br/><span class="gradient-text">That Actually Works</span></h2>
+          <p class="text-slate-400 leading-relaxed mb-4">
+            I'm an AI Engineer with a Master's in Computer Science (4.0 GPA) from Northeastern University,
+            specializing in building production-grade agentic systems. My focus is on the hard parts:
+            making AI agents reliable, context-efficient, and secure.
+          </p>
+          <p class="text-slate-400 leading-relaxed mb-4">
+            I've studied how leading AI tools architect their prompt pipelines (including Claude Code's
+            source) and applied those patterns to my own systems — implementing layered prompt assembly,
+            token budget allocation, multi-stage context compression, and fail-closed tool governance.
+          </p>
+          <p class="text-slate-400 leading-relaxed mb-8">
+            My two flagship projects — an AI multi-agent platform and an AI diary companion — demonstrate
+            full-stack agent engineering at depth: from prompt design through memory lifecycle management
+            to streaming harness implementation.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Context Engineering</span>
+            <span class="tag">Multi-Agent Orchestration</span>
+            <span class="tag-cyan">LLM Applications</span>
+            <span class="tag-cyan">RAG Pipelines</span>
+            <span class="tag-blue">Full-Stack AI</span>
+            <span class="tag-blue">Prompt Architecture</span>
+          </div>
+        </div>
+        <div class="fade-in grid grid-cols-2 gap-4" style="transition-delay:0.15s">
+          <!-- Highlight cards -->
+          <div class="card-bg rounded-2xl p-5 glow-violet">
+            <div class="text-3xl mb-2">🤖</div>
+            <h3 class="font-bold text-white mb-1">Multi-Agent Systems</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Orchestrating 5 specialized agents with tool governance, context compression & memory</p>
+          </div>
+          <div class="card-bg rounded-2xl p-5">
+            <div class="text-3xl mb-2">🧠</div>
+            <h3 class="font-bold text-white mb-1">Context Engineering</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Static/dynamic prompt splitting, token budget allocation, 4-stage compression pipelines</p>
+          </div>
+          <div class="card-bg rounded-2xl p-5">
+            <div class="text-3xl mb-2">⚡</div>
+            <h3 class="font-bold text-white mb-1">Streaming LLMs</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Real-time streaming responses with structured output parsing and error recovery</p>
+          </div>
+          <div class="card-bg rounded-2xl p-5 glow-cyan">
+            <div class="text-3xl mb-2">🔒</div>
+            <h3 class="font-bold text-white mb-1">Secure by Design</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Fail-closed tools, Zod validation, server-side key management, rate limiting</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════ PROJECTS ════════════════ -->
+  <section id="projects" class="section-bg py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <p class="text-xs font-semibold tracking-widest text-violet-400 uppercase mb-3">Portfolio</p>
+        <h2 class="text-4xl font-black text-white mb-4">Featured <span class="gradient-text">Projects</span></h2>
+        <p class="text-slate-500 max-w-xl mx-auto">Production-grade AI agent applications built solo — demonstrating depth across the full engineering stack</p>
+      </div>
+
+      <!-- ── Project 1: Solopreneur Team ── -->
+      <div class="project-card card-bg rounded-3xl p-8 mb-10 fade-in">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <!-- Left: info -->
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">🚀</span>
+              <span class="tag" style="font-size:0.68rem">Featured Project</span>
+            </div>
+            <h3 class="text-2xl font-black text-white mb-2">Solopreneur Team</h3>
+            <p class="text-violet-400 font-semibold text-sm mb-4">Multi-Agent AI Platform for Creators &amp; Founders</p>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              A platform where 5 specialized AI agents — Marketer, Designer, Bookkeeper, Customer Support,
+              and Sales — collaborate to run a solopreneur's business. Built solo from scratch:
+              88 source files, ~10,500 LOC. The technical depth is in the <strong class="text-slate-300">agent harness</strong> —
+              not the model, but the system that makes agents reliable, context-efficient, and safe.
+            </p>
+
+            <!-- Achievements -->
+            <div class="space-y-3 mb-6">
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Cache-aware prompt assembly</strong> — system prompts split at a dynamic boundary; static sections (~4K tokens) cached per request, reducing latency and inference cost</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">4-stage context compression pipeline</strong> — snip → micro-summarize → collapse → drop; activates at 80% token budget to prevent agent amnesia mid-conversation</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Fail-closed tool governance</strong> — every tool has a <code class="text-cyan-400 text-xs bg-black/30 px-1 rounded">requiresApproval: true</code> default, Zod schema validation, agent-type whitelist, and structured ToolResult</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Multi-agent memory scoping</strong> — per-agent memory isolation with cross-agent shared project context; prevents one agent's state from contaminating another</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Multi-provider LLM abstraction</strong> — unified interface across OpenAI, Anthropic, and Gemini via Vercel AI SDK v6; swap providers per agent without code changes</p>
+              </div>
+            </div>
+
+            <!-- Stack -->
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag">Next.js 16</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Vercel AI SDK v6</span>
+              <span class="tag-cyan">Multi-Agent Orchestration</span>
+              <span class="tag-cyan">Context Compression</span>
+              <span class="tag-blue">SQLite / Prisma</span>
+              <span class="tag-blue">Tailwind CSS</span>
+            </div>
+
+            <!-- Scale badge -->
+            <div class="mt-5 inline-flex gap-4 text-xs text-slate-500 font-mono">
+              <span>88 files</span>
+              <span class="text-slate-700">·</span>
+              <span>~10,500 LOC</span>
+              <span class="text-slate-700">·</span>
+              <span>5 specialized agents</span>
+              <span class="text-slate-700">·</span>
+              <span>Solo build</span>
+            </div>
+          </div>
+          <!-- Right: carousel -->
+          <div>
+            <div class="carousel" id="carousel-solopreneur">
+              <div class="carousel-track" id="track-solopreneur">
+                <div class="carousel-slide"><img src="assets/solopreneur/01-landing.png" alt="Solopreneur Team landing page" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/05-team-assembly.png" alt="AI team assembly" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/06-dashboard.png" alt="Agent dashboard" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/07-agent-marketer.png" alt="AI Marketer agent" /></div>
+              </div>
+              <button class="carousel-btn prev" onclick="prevSlide('solopreneur')">‹</button>
+              <button class="carousel-btn next" onclick="nextSlide('solopreneur')">›</button>
+            </div>
+            <div class="carousel-dots" id="dots-solopreneur">
+              <div class="dot active" onclick="goToSlide('solopreneur',0)"></div>
+              <div class="dot" onclick="goToSlide('solopreneur',1)"></div>
+              <div class="dot" onclick="goToSlide('solopreneur',2)"></div>
+              <div class="dot" onclick="goToSlide('solopreneur',3)"></div>
+            </div>
+            <!-- Slide captions -->
+            <p id="caption-solopreneur" class="text-center text-xs text-slate-600 mt-1 italic">Landing page</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Project 2: AI Diary Companion ── -->
+      <div class="project-card card-bg rounded-3xl p-8 mb-10 fade-in" style="transition-delay:0.15s">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <!-- Left: carousel -->
+          <div class="order-2 lg:order-1">
+            <div class="carousel" id="carousel-diary">
+              <div class="carousel-track" id="track-diary">
+                <div class="carousel-slide"><img src="assets/ai-diary/01-landing.png" alt="AI Diary landing" /></div>
+                <div class="carousel-slide"><img src="assets/ai-diary/06-chat-first-response.png" alt="Character chat" /></div>
+                <div class="carousel-slide"><img src="assets/ai-diary/07-chat-conversation.png" alt="Conversation view" /></div>
+                <div class="carousel-slide"><img src="assets/ai-diary/09-diary-entry.png" alt="Generated diary entry" /></div>
+                <div class="carousel-slide"><img src="assets/ai-diary/10-diary-calendar.png" alt="Diary calendar" /></div>
+                <div class="carousel-slide"><img src="assets/ai-diary/13-insights.png" alt="Mood insights" /></div>
+              </div>
+              <button class="carousel-btn prev" onclick="prevSlide('diary')">‹</button>
+              <button class="carousel-btn next" onclick="nextSlide('diary')">›</button>
+            </div>
+            <div class="carousel-dots" id="dots-diary">
+              <div class="dot active" onclick="goToSlide('diary',0)"></div>
+              <div class="dot" onclick="goToSlide('diary',1)"></div>
+              <div class="dot" onclick="goToSlide('diary',2)"></div>
+              <div class="dot" onclick="goToSlide('diary',3)"></div>
+              <div class="dot" onclick="goToSlide('diary',4)"></div>
+              <div class="dot" onclick="goToSlide('diary',5)"></div>
+            </div>
+            <p id="caption-diary" class="text-center text-xs text-slate-600 mt-1 italic">Landing page</p>
+          </div>
+          <!-- Right: info -->
+          <div class="order-1 lg:order-2">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">📔</span>
+              <span class="tag tag-cyan" style="font-size:0.68rem">Featured Project</span>
+            </div>
+            <h3 class="text-2xl font-black text-white mb-2">AI Diary Companion</h3>
+            <p class="text-cyan-400 font-semibold text-sm mb-4">LLM Character System with Memory &amp; Prompt Engineering</p>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              A full-stack AI journal where users choose a character companion (therapist, philosopher, coach, artist)
+              for daily conversations. The character listens in-persona, then composes a diary entry in the user's
+              own voice. 38 source files, ~3,500 LOC. The challenge was making characters <em class="text-slate-300">feel real</em> —
+              building the prompt architecture and memory system that creates genuine continuity.
+            </p>
+
+            <div class="space-y-3 mb-6">
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Layered prompt architecture</strong> — static (character identity, norms, safety) + dynamic (memories, diary summaries, date/time) split for cache efficiency across every request</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Character behavior codification</strong> — characters defined as 3-layer behavioral specs (identity → personality → voice style), not descriptions; prevents model drift over long sessions</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Memory lifecycle management</strong> — incremental extraction after each chat + weekly consolidation; importance-scored with natural-language timestamps, injected as contextual hints</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Structured output parsing</strong> — diary generation prompt instructs model to return JSON with title, narrative, mood, tags; parsed and validated before DB write</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Conversation windowing</strong> — last 20 messages in context window; older messages in DB but excluded; prevents token starvation on long-running sessions</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag">Next.js 14+</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">NVIDIA Inference Hub</span>
+              <span class="tag-cyan">Prompt Engineering</span>
+              <span class="tag-cyan">Memory Systems</span>
+              <span class="tag-blue">Prisma + SQLite</span>
+              <span class="tag-blue">Streaming API</span>
+            </div>
+
+            <div class="mt-5 inline-flex gap-4 text-xs text-slate-500 font-mono">
+              <span>38 files</span>
+              <span class="text-slate-700">·</span>
+              <span>~3,500 LOC</span>
+              <span class="text-slate-700">·</span>
+              <span>6 character types</span>
+              <span class="text-slate-700">·</span>
+              <span>Solo build</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Other Projects ── -->
+      <h3 class="text-xl font-bold text-slate-400 mb-6 fade-in" style="transition-delay:0.2s">Other Projects</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="project-card card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.25s">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="text-xl">🗺️</span>
+              <h4 class="text-lg font-bold text-white mt-1">PlanCanvas</h4>
+            </div>
+            <span class="tag">RAG · LangGraph</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            AI architecture design tool that autonomously plans, iteratively refines, and renders system
+            diagrams in real time. FastAPI orchestration layer + RAG pipeline for grounded suggestions +
+            Excalidraw rendering of AI-generated architecture.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag">FastAPI</span><span class="tag">LangGraph</span>
+            <span class="tag-cyan">GPT-4</span><span class="tag-blue">React + Excalidraw</span>
+          </div>
+        </div>
+
+        <div class="project-card card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.3s">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="text-xl">☁️</span>
+              <h4 class="text-lg font-bold text-white mt-1">Serverless Data Pipeline</h4>
+            </div>
+            <span class="tag">AWS · IaC</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Fully serverless, event-driven pipeline using AWS CDK — reusable IaC modules provisioning
+            Lambda, SQS, DynamoDB, and CloudWatch with environment-specific configuration and real-time
+            diagnostics.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag">AWS CDK</span><span class="tag">Lambda</span>
+            <span class="tag-cyan">SQS + DynamoDB</span><span class="tag-blue">CloudWatch</span>
+          </div>
+        </div>
+
+        <div class="project-card card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.35s">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="text-xl">🔬</span>
+              <h4 class="text-lg font-bold text-white mt-1">LLM Research Registration System</h4>
+            </div>
+            <span class="tag">GCP · Scale</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Scalable research registration platform on GCP — TypeScript frontend, Django backend, Docker,
+            Redis, and Elasticsearch. Engineered for 99.9% uptime and auto-scaling across thousands of
+            concurrent research projects.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag">TypeScript</span><span class="tag">Django</span>
+            <span class="tag-cyan">Redis · Elasticsearch</span><span class="tag-blue">GCP · Docker</span>
+          </div>
+        </div>
+
+        <div class="project-card card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.4s">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <span class="text-xl">📋</span>
+              <h4 class="text-lg font-bold text-white mt-1">Kanbas LMS</h4>
+            </div>
+            <span class="tag">Full-Stack</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Responsive learning management system with React + Redux frontend and Node.js + MongoDB backend.
+            Optimized RESTful API caching strategies and Axios async requests — 40% reduction in
+            response times.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag">React</span><span class="tag">Redux</span>
+            <span class="tag-cyan">Node.js · Express</span><span class="tag-blue">MongoDB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════ SKILLS ════════════════ -->
+  <section id="skills" class="section-bg py-24 grid-overlay">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <p class="text-xs font-semibold tracking-widest text-violet-400 uppercase mb-3">Expertise</p>
+        <h2 class="text-4xl font-black text-white mb-4">Technical <span class="gradient-text">Skills</span></h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- AI & Agents -->
+        <div class="card-bg rounded-2xl p-6 fade-in">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
+               style="background: rgba(124,58,237,0.2);">🤖</div>
+          <h4 class="font-bold text-white mb-4 text-sm">AI & Agent Engineering</h4>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">Agentic Workflows</span><span class="text-violet-400">●●●●●</span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">Context Engineering</span><span class="text-violet-400">●●●●●</span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">Prompt Architecture</span><span class="text-violet-400">●●●●●</span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">RAG Pipelines</span><span class="text-violet-400">●●●●○</span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">Memory Systems</span><span class="text-violet-400">●●●●○</span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span class="text-slate-400">LLM Streaming</span><span class="text-violet-400">●●●●○</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.1s">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
+               style="background: rgba(6,182,212,0.15);">💻</div>
+          <h4 class="font-bold text-white mb-4 text-sm">Languages</h4>
+          <div class="space-y-3">
+            <div class="flex justify-between text-xs"><span class="text-slate-400">TypeScript</span><span class="text-cyan-400">●●●●●</span></div>
+            <div class="flex justify-between text-xs"><span class="text-slate-400">Python</span><span class="text-cyan-400">●●●●●</span></div>
+            <div class="flex justify-between text-xs"><span class="text-slate-400">JavaScript</span><span class="text-cyan-400">●●●●●</span></div>
+            <div class="flex justify-between text-xs"><span class="text-slate-400">Java</span><span class="text-cyan-400">●●●●○</span></div>
+            <div class="flex justify-between text-xs"><span class="text-slate-400">Swift</span><span class="text-cyan-400">●●●○○</span></div>
+            <div class="flex justify-between text-xs"><span class="text-slate-400">SQL</span><span class="text-cyan-400">●●●●○</span></div>
+          </div>
+        </div>
+
+        <!-- Frameworks -->
+        <div class="card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.2s">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
+               style="background: rgba(37,99,235,0.15);">⚙️</div>
+          <h4 class="font-bold text-white mb-4 text-sm">Frameworks & Tools</h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag" style="font-size:0.65rem">Next.js</span>
+            <span class="tag" style="font-size:0.65rem">React</span>
+            <span class="tag" style="font-size:0.65rem">FastAPI</span>
+            <span class="tag" style="font-size:0.65rem">LangChain</span>
+            <span class="tag" style="font-size:0.65rem">LangGraph</span>
+            <span class="tag-cyan" style="font-size:0.65rem">Vercel AI SDK</span>
+            <span class="tag-cyan" style="font-size:0.65rem">Prisma</span>
+            <span class="tag-cyan" style="font-size:0.65rem">Tailwind</span>
+            <span class="tag-blue" style="font-size:0.65rem">Node.js</span>
+            <span class="tag-blue" style="font-size:0.65rem">Express</span>
+            <span class="tag-blue" style="font-size:0.65rem">Flask</span>
+            <span class="tag-blue" style="font-size:0.65rem">Django</span>
+            <span class="tag" style="font-size:0.65rem">Redis</span>
+            <span class="tag" style="font-size:0.65rem">Ollama</span>
+          </div>
+        </div>
+
+        <!-- Cloud -->
+        <div class="card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.3s">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl"
+               style="background: rgba(124,58,237,0.2);">☁️</div>
+          <h4 class="font-bold text-white mb-4 text-sm">Cloud & Infrastructure</h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag" style="font-size:0.65rem">AWS CDK</span>
+            <span class="tag" style="font-size:0.65rem">Lambda</span>
+            <span class="tag" style="font-size:0.65rem">SQS</span>
+            <span class="tag" style="font-size:0.65rem">DynamoDB</span>
+            <span class="tag-cyan" style="font-size:0.65rem">GCP</span>
+            <span class="tag-cyan" style="font-size:0.65rem">Firebase</span>
+            <span class="tag-cyan" style="font-size:0.65rem">MongoDB Atlas</span>
+            <span class="tag-blue" style="font-size:0.65rem">Docker</span>
+            <span class="tag-blue" style="font-size:0.65rem">Azure</span>
+            <span class="tag" style="font-size:0.65rem">NVIDIA Inference Hub</span>
+            <span class="tag" style="font-size:0.65rem">OpenAI API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════ EXPERIENCE ════════════════ -->
+  <section id="experience" class="section-bg py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <p class="text-xs font-semibold tracking-widest text-violet-400 uppercase mb-3">Career</p>
+        <h2 class="text-4xl font-black text-white mb-4">Work <span class="gradient-text">Experience</span></h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <!-- Education -->
+        <div class="flex gap-6 mb-10 fade-in">
+          <div class="flex-shrink-0 w-12 text-right">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg ml-auto"
+                 style="background: rgba(124,58,237,0.2);">🎓</div>
+          </div>
+          <div class="card-bg rounded-2xl p-6 flex-1">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div>
+                <h4 class="font-bold text-white">MS Computer Science</h4>
+                <p class="text-sm text-violet-400">Northeastern University · San Jose, CA</p>
+              </div>
+              <span class="tag text-xs">GPA: 4.0/4.0</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Sep 2022 – Aug 2025</p>
+            <p class="text-sm text-slate-400">Cloud Computing, Database Management, Web Development, iOS Development</p>
+          </div>
+        </div>
+
+        <!-- 1Thing 2025 -->
+        <div class="flex gap-6 mb-10 fade-in" style="transition-delay:0.1s">
+          <div class="flex-shrink-0 w-12 text-right">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg ml-auto"
+                 style="background: rgba(6,182,212,0.15);">💼</div>
+          </div>
+          <div class="card-bg rounded-2xl p-6 flex-1">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div>
+                <h4 class="font-bold text-white">Full-Stack Software Developer Intern</h4>
+                <p class="text-sm text-cyan-400">1 Thing Against Racism · Remote</p>
+              </div>
+              <span class="tag-cyan text-xs">Python · Flask · GCP</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Jan 2025 – Apr 2025</p>
+            <ul class="space-y-2">
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-cyan-500 mt-0.5 text-xs flex-shrink-0">▸</span>Designed scalable APIs for Hate Crime Tracker app with Flask + GCP; implemented caching reducing response times by 40%</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-cyan-500 mt-0.5 text-xs flex-shrink-0">▸</span>Integrated Twitter and LinkedIn APIs for automated verified incident report publishing</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 1Thing 2024 -->
+        <div class="flex gap-6 mb-10 fade-in" style="transition-delay:0.2s">
+          <div class="flex-shrink-0 w-12 text-right">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg ml-auto"
+                 style="background: rgba(6,182,212,0.15);">💼</div>
+          </div>
+          <div class="card-bg rounded-2xl p-6 flex-1">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div>
+                <h4 class="font-bold text-white">Full-Stack Software Developer Intern</h4>
+                <p class="text-sm text-cyan-400">1 Thing Against Racism · Remote</p>
+              </div>
+              <span class="tag-blue text-xs">TypeScript · React · Firebase</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Jan 2024 – Apr 2024</p>
+            <ul class="space-y-2">
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-cyan-500 mt-0.5 text-xs flex-shrink-0">▸</span>Built cross-platform app (React + React Native) serving 100,000+ users; engineered Redux state management + Firestore real-time sync</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-cyan-500 mt-0.5 text-xs flex-shrink-0">▸</span>Embedded AI-powered content moderation reducing manual intervention by 30%; implemented OAuth authentication</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════ CONTACT ════════════════ -->
+  <section id="contact" class="section-bg py-24 grid-overlay">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <div class="fade-in">
+        <p class="text-xs font-semibold tracking-widest text-violet-400 uppercase mb-3">Contact</p>
+        <h2 class="text-4xl font-black text-white mb-4">Let's <span class="gradient-text">Build Together</span></h2>
+        <p class="text-slate-400 mb-12 max-w-xl mx-auto">
+          I'm actively looking for AI Agent Engineer roles. If you're building intelligent systems
+          and want someone who can go deep on both the architecture and the implementation, let's talk.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-6 mb-12">
+          <a href="mailto:joycexie0615@gmail.com"
+             class="flex items-center gap-3 card-bg rounded-2xl px-6 py-4 hover:border-violet-500/50 transition-all group">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                 style="background: rgba(124,58,237,0.2);">📧</div>
+            <div class="text-left">
+              <div class="text-xs text-slate-500 mb-0.5">Email</div>
+              <div class="text-sm font-semibold text-white group-hover:text-violet-400 transition-colors">joycexie0615@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/dongjun-xie-1b10b8172/" target="_blank"
+             class="flex items-center gap-3 card-bg rounded-2xl px-6 py-4 hover:border-cyan-500/50 transition-all group">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                 style="background: rgba(6,182,212,0.12);">🔗</div>
+            <div class="text-left">
+              <div class="text-xs text-slate-500 mb-0.5">LinkedIn</div>
+              <div class="text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">Dongjun (Joyce) Xie</div>
+            </div>
+          </a>
+
+          <div class="flex items-center gap-3 card-bg rounded-2xl px-6 py-4">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                 style="background: rgba(16,185,129,0.15);">📍</div>
+            <div class="text-left">
+              <div class="text-xs text-slate-500 mb-0.5">Location</div>
+              <div class="text-sm font-semibold text-white">California, USA</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <a href="mailto:joycexie0615@gmail.com"
+           class="inline-block px-8 py-4 rounded-xl bg-violet-600 text-white font-bold btn-glow text-sm">
+          Send Me a Message →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="py-8 border-t" style="border-color: rgba(255,255,255,0.06);">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-slate-600">© 2026 Joyce Xie. AI Agent Engineer.</p>
+      <p class="text-xs text-slate-700 font-mono">Built with Next.js · TypeScript · Tailwind CSS</p>
+    </div>
+  </footer>
+
+  <!-- ════════════════ SCRIPTS ════════════════ -->
+  <script>
+    // ── Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-glass');
+      } else {
+        nav.classList.remove('nav-glass');
+      }
+    });
+
+    // ── Mobile menu
+    document.getElementById('mobile-btn').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    // ── Fade-in on scroll
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // ── Carousel
+    const carousels = {
+      solopreneur: { current: 0, total: 4, captions: ['Landing page', 'AI team assembly', 'Agent dashboard', 'AI Marketer agent'] },
+      diary: { current: 0, total: 6, captions: ['Landing page', 'Character chat (first response)', 'Conversation view', 'Generated diary entry', 'Diary calendar view', 'Mood insights & analytics'] }
+    };
+
+    function updateCarousel(name) {
+      const c = carousels[name];
+      const track = document.getElementById(`track-${name}`);
+      track.style.transform = `translateX(-${c.current * 100}%)`;
+      const dots = document.querySelectorAll(`#dots-${name} .dot`);
+      dots.forEach((d, i) => d.classList.toggle('active', i === c.current));
+      document.getElementById(`caption-${name}`).textContent = c.captions[c.current];
+    }
+
+    function nextSlide(name) {
+      const c = carousels[name];
+      c.current = (c.current + 1) % c.total;
+      updateCarousel(name);
+    }
+
+    function prevSlide(name) {
+      const c = carousels[name];
+      c.current = (c.current - 1 + c.total) % c.total;
+      updateCarousel(name);
+    }
+
+    function goToSlide(name, idx) {
+      carousels[name].current = idx;
+      updateCarousel(name);
+    }
+
+    // Auto-advance carousels
+    setInterval(() => nextSlide('solopreneur'), 4000);
+    setInterval(() => nextSlide('diary'), 3500);
+
+    // ── Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('mobile-menu').classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
