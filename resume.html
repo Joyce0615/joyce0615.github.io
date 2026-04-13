@@ -167,31 +167,7 @@
   <div class="section">
     <div class="section-title">Projects</div>
 
-    <!-- Solopreneur Team (FEATURED) -->
-    <div class="featured entry">
-      <div class="entry-header">
-        <div class="entry-title">Solopreneur Team — Multi-Agent AI Platform</div>
-        <div class="entry-date">Feb 2026 – Apr 2026</div>
-      </div>
-      <div class="entry-subtitle">
-        Next.js 16 · TypeScript · Vercel AI SDK v6 · SQLite · Tailwind CSS
-        <span class="scale-badge">Solo build · 88 source files · ~10,500 LOC · 5 specialized agents</span>
-      </div>
-      <div class="project-tags">
-        <span class="ptag ptag-violet">Multi-Agent Orchestration</span>
-        <span class="ptag ptag-violet">Context Engineering</span>
-        <span class="ptag ptag-violet">Tool Governance</span>
-        <span class="ptag ptag-gray">Full-Stack AI</span>
-      </div>
-      <ul class="bullets" style="margin-top:7px">
-        <li>Architected a platform where 5 specialized AI agents (Marketer, Designer, Bookkeeper, Support, Sales) collaboratively handle project work with per-agent personas, tool sets, memory scoping, and permission boundaries</li>
-        <li>Engineered <strong>cache-aware prompt assembly</strong> with a SYSTEM_PROMPT_DYNAMIC_BOUNDARY split — static sections (~4K tokens) cached across requests, dynamic sections injected per call — reducing latency and inference cost</li>
-        <li>Built a <strong>4-stage context compression pipeline</strong> (snip → micro-summarize → collapse → drop) activated at 80% token budget to prevent agent amnesia mid-conversation across long sessions</li>
-        <li>Designed <strong>fail-closed tool governance</strong>: every tool defaults to requiresApproval=true, enforces an agent-type whitelist, runs Zod schema validation on invocation, and returns structured ToolResult with error context</li>
-        <li>Implemented <strong>multi-provider LLM abstraction</strong> via Vercel AI SDK v6 — unified interface across OpenAI, Anthropic, and Gemini; swap model providers per agent without code changes</li>
-        <li>Designed explicit token budget allocation across sections (system: 4K, tools: 8K, memory: 4K, conversation: 180K) with proportional scaling for smaller context windows</li>
-      </ul>
-    </div>
+
 
     <!-- AI Diary Companion (FEATURED) -->
     <div class="featured entry">
@@ -260,6 +236,22 @@
   <!-- ── PROFESSIONAL EXPERIENCE ── -->
   <div class="section">
     <div class="section-title">Professional Experience</div>
+
+    <!-- SiriusMindshare -->
+    <div class="featured entry">
+      <div class="entry-header">
+        <div class="entry-title">Machine Learning Engineer</div>
+        <div class="entry-date">Oct 2025 – Present</div>
+      </div>
+      <div class="entry-subtitle">SiriusMindshare LLC · San Jose, CA <span class="stack">| Next.js 16 · TypeScript · Vercel AI SDK v6 · Multi-Agent Systems</span></div>
+      <ul class="bullets">
+        <li>Architected and shipped a multi-agent AI platform (Solopreneur Team) with 5 specialized agents — Marketer, Designer, Bookkeeper, Customer Support, and Sales — each with distinct personas, tool sets, memory scoping, and permission boundaries; <strong>88 source files, ~10,500 LOC</strong></li>
+        <li>Engineered <strong>cache-aware prompt assembly</strong> with a static/dynamic boundary split; static sections (~4K tokens) cached across requests, reducing LLM latency and inference cost on every agent call</li>
+        <li>Built a <strong>4-stage context compression pipeline</strong> (snip → micro-summarize → collapse → drop) activating at 80% token budget, preventing agent amnesia across extended multi-turn sessions</li>
+        <li>Designed <strong>fail-closed tool governance</strong>: all tools default to <code>requiresApproval=true</code>, enforce an agent-type whitelist, run Zod schema validation on every invocation, and return structured ToolResult with error context</li>
+        <li>Implemented <strong>multi-provider LLM abstraction</strong> via Vercel AI SDK v6 — unified interface across OpenAI, Anthropic, and Gemini; swap model providers per agent without code changes</li>
+      </ul>
+    </div>
 
     <div class="entry">
       <div class="entry-header">

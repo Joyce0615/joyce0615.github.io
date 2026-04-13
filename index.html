@@ -680,6 +680,31 @@
       </div>
 
       <div class="max-w-3xl mx-auto">
+        <!-- SiriusMindshare -->
+        <div class="flex gap-6 mb-10 fade-in">
+          <div class="flex-shrink-0 w-12 text-right">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg ml-auto"
+                 style="background: rgba(124,58,237,0.2);">🤖</div>
+          </div>
+          <div class="card-bg rounded-2xl p-6 flex-1" style="border-color: rgba(124,58,237,0.25);">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div>
+                <h4 class="font-bold text-white">Machine Learning Engineer</h4>
+                <p class="text-sm text-violet-400">SiriusMindshare LLC · San Jose, CA</p>
+              </div>
+              <span class="tag text-xs">Oct 2025 – Present</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Next.js 16 · TypeScript · Vercel AI SDK v6 · Multi-Agent Systems · LLM Engineering</p>
+            <ul class="space-y-2">
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-violet-400 mt-0.5 text-xs flex-shrink-0">▸</span>Architected and shipped a multi-agent AI platform with 5 specialized agents (Marketer, Designer, Bookkeeper, Support, Sales) — each with distinct personas, tool sets, memory scoping, and permission boundaries</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-violet-400 mt-0.5 text-xs flex-shrink-0">▸</span>Engineered cache-aware prompt assembly with a static/dynamic boundary split, caching ~4K tokens per request to reduce LLM latency and inference cost across all agent calls</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-violet-400 mt-0.5 text-xs flex-shrink-0">▸</span>Built a 4-stage context compression pipeline (snip → micro-summarize → collapse → drop) activating at 80% token budget — preventing agent amnesia across long multi-turn sessions</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-violet-400 mt-0.5 text-xs flex-shrink-0">▸</span>Designed fail-closed tool governance: every tool defaults to <code class="text-violet-300 text-xs bg-black/30 px-1 rounded">requiresApproval=true</code>, enforces an agent-type whitelist, and runs Zod schema validation on every invocation</li>
+              <li class="text-sm text-slate-400 flex gap-2"><span class="text-violet-400 mt-0.5 text-xs flex-shrink-0">▸</span>Implemented multi-provider LLM abstraction via Vercel AI SDK v6 — unified interface across OpenAI, Anthropic, and Gemini; swap model providers per agent without code changes</li>
+            </ul>
+          </div>
+        </div>
+
         <!-- 1Thing 2025 -->
         <div class="flex gap-6 mb-10 fade-in" style="transition-delay:0.1s">
           <div class="flex-shrink-0 w-12 text-right">
