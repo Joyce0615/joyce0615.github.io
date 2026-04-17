@@ -221,11 +221,11 @@
         <!-- Floating stat badges -->
         <div class="flex flex-wrap gap-4 fade-in" style="transition-delay:0.3s">
           <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:0s">
-            <div class="text-2xl font-black gradient-text">2</div>
+            <div class="text-2xl font-black gradient-text">3</div>
             <div class="text-xs text-slate-500 mt-0.5">AI Agent Apps</div>
           </div>
           <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:0.5s">
-            <div class="text-2xl font-black gradient-text">14K+</div>
+            <div class="text-2xl font-black gradient-text">20K+</div>
             <div class="text-xs text-slate-500 mt-0.5">Lines of Code</div>
           </div>
           <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:1s">
@@ -233,7 +233,7 @@
             <div class="text-xs text-slate-500 mt-0.5">GPA · NEU MSCS</div>
           </div>
           <div class="float-badge card-bg rounded-xl px-5 py-3 text-center" style="animation-delay:1.5s">
-            <div class="text-2xl font-black gradient-text">5</div>
+            <div class="text-2xl font-black gradient-text">8</div>
             <div class="text-xs text-slate-500 mt-0.5">Specialized Agents</div>
           </div>
         </div>
@@ -261,9 +261,10 @@
             token budget allocation, multi-stage context compression, and fail-closed tool governance.
           </p>
           <p class="text-slate-400 leading-relaxed mb-8">
-            My two flagship projects — an AI multi-agent platform and an AI diary companion — demonstrate
-            full-stack agent engineering at depth: from prompt design through memory lifecycle management
-            to streaming harness implementation.
+            My three flagship projects — an AI multi-agent platform, an AI diary companion, and a
+            Kaggle multi-agent competition team — demonstrate full-stack agent engineering at depth:
+            from prompt design and memory lifecycle management to multi-agent orchestration and
+            score-informed evolution loops.
           </p>
           <div class="flex flex-wrap gap-2">
             <span class="tag">Context Engineering</span>
@@ -463,12 +464,16 @@
                 <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
                 <p class="text-sm text-slate-400"><strong class="text-slate-300">Conversation windowing</strong> — last 20 messages in context window; older messages in DB but excluded; prevents token starvation on long-running sessions</p>
               </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-cyan-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Character skill system</strong> — per-character skill definitions with keyword, mood, and intent triggers; <code class="text-cyan-400 text-xs bg-black/30 px-1 rounded">detectActiveSkills()</code> injects specialized behavior instructions as a second prompt section at runtime</p>
+              </div>
             </div>
 
             <div class="flex flex-wrap gap-1.5">
               <span class="tag">Next.js 14+</span>
               <span class="tag">TypeScript</span>
-              <span class="tag">NVIDIA Inference Hub</span>
+              <span class="tag">OpenAI-compatible API</span>
               <span class="tag">Prompt Engineering</span>
               <span class="tag">Memory Systems</span>
               <span class="tag">Prisma + SQLite</span>
@@ -488,8 +493,113 @@
         </div>
       </div>
 
+      <!-- ── Project 3: Kaggle Team ── -->
+      <div class="project-card card-bg rounded-3xl p-8 mb-10 fade-in" style="transition-delay:0.2s">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <!-- Left: info -->
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">🏆</span>
+              <span class="tag" style="font-size:0.68rem">Featured Project</span>
+            </div>
+            <h3 class="text-2xl font-black text-white mb-2">Kaggle Team</h3>
+            <p class="text-violet-400 font-semibold text-sm mb-4">Multi-Agent System for Kaggle Competition Optimization</p>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              A CLI-driven multi-agent team — Researcher, PM, and Engineer — that collaborates through
+              a 4-phase evolution loop to progressively improve Kaggle competition scores. 75 source files,
+              ~6,300 LOC. Built around a <strong class="text-slate-300">score-informed feedback loop</strong>:
+              every agent sees submission history, CV-LB gap trends, and community signals before acting.
+            </p>
+
+            <div class="space-y-3 mb-6">
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">4-phase evolution loop</strong> — Research → Strategy → Build → QA; each round's scores, gaps, and community findings feed directly into the next round's agent context</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Living community intelligence</strong> — incremental scanning of Kaggle notebooks and discussions each round; agents see only the delta (new content since last scan)</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">BUILD_ON vs REBUILD decision</strong> — PM explicitly chooses whether to iterate on the previous round's solution or start fresh, citing score trends and community evidence</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Cost &amp; turn tracking</strong> — per-phase token cost and turn count extracted from stream events; persisted in state.json with a summary table printed after each round</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Round-table retrospectives</strong> — periodic cross-round review session (configurable interval) synthesizing score trajectory, bottlenecks, and strategic pivot recommendations</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag">TypeScript + Bun</span>
+              <span class="tag">Python + Jupyter</span>
+              <span class="tag">Multi-Agent Orchestration</span>
+              <span class="tag">Anthropic SDK</span>
+              <span class="tag">Kaggle API</span>
+              <span class="tag">Score-Informed Agents</span>
+              <span class="tag">Knowledge Base</span>
+            </div>
+
+            <div class="mt-5 inline-flex gap-4 text-xs text-slate-500 font-mono">
+              <span>75 files</span>
+              <span class="text-slate-700">·</span>
+              <span>~6,300 LOC</span>
+              <span class="text-slate-700">·</span>
+              <span>3 specialized agents</span>
+              <span class="text-slate-700">·</span>
+              <span>Solo build</span>
+            </div>
+          </div>
+          <!-- Right: architecture diagram -->
+          <div>
+            <div class="rounded-xl overflow-hidden border border-white/8" style="background:#0a0a16;">
+              <!-- Terminal title bar -->
+              <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/6" style="background:rgba(255,255,255,0.03);">
+                <span class="w-3 h-3 rounded-full bg-red-500/60"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/60"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/60"></span>
+                <span class="ml-3 text-xs text-slate-600 font-mono">orchestrator loop</span>
+              </div>
+              <!-- Diagram content -->
+              <div class="p-5 font-mono text-xs leading-relaxed" style="color:#94a3b8;">
+                <div class="text-violet-400 mb-3">$ kaggle-team run --backend cli</div>
+                <div class="text-slate-600 mb-2">── Round 0 (Baseline) ──────────────</div>
+                <div class="pl-2 space-y-0.5 mb-3">
+                  <div><span class="text-emerald-400">✓</span> Download data + community notebooks</div>
+                  <div><span class="text-emerald-400">✓</span> Research → Strategy → Build → QA</div>
+                  <div><span class="text-emerald-400">✓</span> Submit · Record CV &amp; LB scores</div>
+                </div>
+                <div class="text-slate-600 mb-2">── Round N (Evolution Loop) ─────────</div>
+                <div class="pl-2 space-y-0.5 mb-3">
+                  <div><span class="text-cyan-400">↻</span> Community scan <span class="text-slate-600">(diff only new)</span></div>
+                  <div><span class="text-cyan-400">↻</span> Researcher <span class="text-slate-600">→ reuse prior analysis</span></div>
+                  <div><span class="text-cyan-400">↻</span> PM <span class="text-slate-600">→ BUILD_ON or REBUILD?</span></div>
+                  <div><span class="text-cyan-400">↻</span> Engineer <span class="text-slate-600">→ notebooks + beat LB</span></div>
+                  <div><span class="text-cyan-400">↻</span> QA → submit · CV-LB gap analysis</div>
+                </div>
+                <div class="text-slate-600 mb-2">── Cost Summary ─────────────────────</div>
+                <div class="pl-2 space-y-0.5 mb-3">
+                  <div class="text-slate-500"> research │ $0.81 │ 16 turns │ completed</div>
+                  <div class="text-slate-500"> strategy │ $0.30 │  4 turns │ completed</div>
+                  <div class="text-slate-500"> build    │ $1.58 │ 32 turns │ completed</div>
+                  <div class="text-slate-500"> qa       │ $0.76 │ 19 turns │ completed</div>
+                  <div class="text-violet-400"> TOTAL    │ $3.44 │ 71 turns</div>
+                </div>
+                <div class="text-slate-600 mb-1">── Knowledge Base ───────────────────</div>
+                <div class="pl-2 text-slate-500">"Sex strongest predictor (CV +2.1%)"</div>
+                <div class="pl-2 text-slate-500">"GBM beats RF on this dataset"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ── Other Projects ── -->
-      <h3 class="text-xl font-bold text-slate-400 mb-6 fade-in" style="transition-delay:0.2s">Other Projects</h3>
+      <h3 class="text-xl font-bold text-slate-400 mb-6 fade-in" style="transition-delay:0.3s">Other Projects</h3>
       <div class="grid md:grid-cols-2 gap-6">
         <div class="project-card card-bg rounded-2xl p-6 fade-in" style="transition-delay:0.25s">
           <div class="flex items-start justify-between mb-4">
@@ -624,6 +734,8 @@
             <span class="tag" style="font-size:0.65rem">Django</span>
             <span class="tag" style="font-size:0.65rem">Ollama</span>
             <span class="tag" style="font-size:0.65rem">Streamlit</span>
+            <span class="tag" style="font-size:0.65rem">XGBoost / LightGBM</span>
+            <span class="tag" style="font-size:0.65rem">Scikit-learn</span>
           </div>
         </div>
 
