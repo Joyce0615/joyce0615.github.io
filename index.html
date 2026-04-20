@@ -313,7 +313,7 @@
         <p class="text-slate-500 max-w-xl mx-auto">Production-grade AI agent applications built solo — demonstrating depth across the full engineering stack</p>
       </div>
 
-      <!-- ── Project 1: Solopreneur Team ── -->
+      <!-- ── Project 1: AI Team Builder ── -->
       <div class="project-card card-bg rounded-3xl p-8 mb-10 fade-in">
         <div class="grid lg:grid-cols-2 gap-10 items-start">
           <!-- Left: info -->
@@ -322,20 +322,29 @@
               <span class="text-2xl">🚀</span>
               <span class="tag" style="font-size:0.68rem">Featured Project</span>
             </div>
-            <h3 class="text-2xl font-black text-white mb-2">Solopreneur Team</h3>
-            <p class="text-violet-400 font-semibold text-sm mb-4">Multi-Agent AI Platform for Creators &amp; Founders</p>
+            <h3 class="text-2xl font-black text-white mb-2">AI Team Builder</h3>
+            <p class="text-violet-400 font-semibold text-sm mb-4">Custom AI Teams, Built by Chat</p>
             <p class="text-slate-400 text-sm leading-relaxed mb-6">
-              A platform where 5 specialized AI agents — Marketer, Designer, Bookkeeper, Customer Support,
-              and Sales — collaborate to run a solopreneur's business. Built solo from scratch:
-              88 source files, ~10,500 LOC. The technical depth is in the <strong class="text-slate-300">agent harness</strong> —
-              not the model, but the system that makes agents reliable, context-efficient, and safe.
+              Describe your project and AI assembles a custom team of specialized agents — roles, tools,
+              and workflow configured automatically. Ships with a Kaggle competition demo (5 agents:
+              Researcher, Strategy PM, Engineer, QA PM, Retro PM) and a live <strong class="text-slate-300">Pixel World</strong>
+              canvas where agents navigate rooms as pixel characters. The technical depth is in the
+              <strong class="text-slate-300">agent harness</strong> — reliable, context-efficient, and safe.
             </p>
 
             <!-- Achievements -->
             <div class="space-y-3 mb-6">
               <div class="flex gap-3 items-start">
                 <span class="text-violet-400 mt-0.5 text-xs">▸</span>
-                <p class="text-sm text-slate-400"><strong class="text-slate-300">Cache-aware prompt assembly</strong> — system prompts split at a dynamic boundary; static sections (~4K tokens) cached per request, reducing latency and inference cost</p>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Team Builder bootstrap</strong> — describe your project in chat; AI generates a complete team spec (roles, tools, workflow) and provisions agents without manual config</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Pixel World visualization</strong> — live top-down canvas with pixel-art agents navigating named rooms (Research Lab, Strategy HQ, Build Workshop); event log shows real-time activity</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Cache-aware prompt assembly</strong> — system prompts split at a dynamic boundary; static sections cached per request, reducing latency and inference cost</p>
               </div>
               <div class="flex gap-3 items-start">
                 <span class="text-violet-400 mt-0.5 text-xs">▸</span>
@@ -343,15 +352,7 @@
               </div>
               <div class="flex gap-3 items-start">
                 <span class="text-violet-400 mt-0.5 text-xs">▸</span>
-                <p class="text-sm text-slate-400"><strong class="text-slate-300">Fail-closed tool governance</strong> — every tool has a <code class="text-cyan-400 text-xs bg-black/30 px-1 rounded">requiresApproval: true</code> default, Zod schema validation, agent-type whitelist, and structured ToolResult</p>
-              </div>
-              <div class="flex gap-3 items-start">
-                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
-                <p class="text-sm text-slate-400"><strong class="text-slate-300">Multi-agent memory scoping</strong> — per-agent memory isolation with cross-agent shared project context; prevents one agent's state from contaminating another</p>
-              </div>
-              <div class="flex gap-3 items-start">
-                <span class="text-violet-400 mt-0.5 text-xs">▸</span>
-                <p class="text-sm text-slate-400"><strong class="text-slate-300">Multi-provider LLM abstraction</strong> — unified interface across OpenAI, Anthropic, and Gemini via Vercel AI SDK v6; swap providers per agent without code changes</p>
+                <p class="text-sm text-slate-400"><strong class="text-slate-300">Kaggle competition demo</strong> — prebuilt 5-agent preset with knowledge base, LB score dashboard, CV-LB gap tracking, and incremental community notebook scanning</p>
               </div>
             </div>
 
@@ -361,6 +362,7 @@
               <span class="tag">TypeScript</span>
               <span class="tag">Vercel AI SDK v6</span>
               <span class="tag">Multi-Agent Orchestration</span>
+              <span class="tag">Pixel World Canvas</span>
               <span class="tag">Context Compression</span>
               <span class="tag">SQLite / Prisma</span>
               <span class="tag">Tailwind CSS</span>
@@ -368,11 +370,11 @@
 
             <!-- Scale badge -->
             <div class="mt-5 inline-flex gap-4 text-xs text-slate-500 font-mono">
-              <span>88 files</span>
+              <span>5 agent roles</span>
               <span class="text-slate-700">·</span>
-              <span>~10,500 LOC</span>
+              <span>Pixel World engine</span>
               <span class="text-slate-700">·</span>
-              <span>5 specialized agents</span>
+              <span>Team Builder AI</span>
               <span class="text-slate-700">·</span>
               <span>Solo build</span>
             </div>
@@ -381,10 +383,11 @@
           <div>
             <div class="carousel" id="carousel-solopreneur">
               <div class="carousel-track" id="track-solopreneur">
-                <div class="carousel-slide"><img src="assets/solopreneur/01-landing.png" alt="Solopreneur Team landing page" /></div>
-                <div class="carousel-slide"><img src="assets/solopreneur/05-team-assembly.png" alt="AI team assembly" /></div>
-                <div class="carousel-slide"><img src="assets/solopreneur/06-dashboard.png" alt="Agent dashboard" /></div>
-                <div class="carousel-slide"><img src="assets/solopreneur/07-agent-marketer.png" alt="AI Marketer agent" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/01-landing.png" alt="Custom AI Teams landing page" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/02-dashboard.png" alt="Kaggle competition dashboard" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/03-agent-researcher.png" alt="Agent knowledge base and data analysis" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/04-team-builder.png" alt="Team Builder — design your AI team" /></div>
+                <div class="carousel-slide"><img src="assets/solopreneur/05-pixel-world.png" alt="Pixel World live agent visualization" /></div>
               </div>
               <button class="carousel-btn prev" onclick="prevSlide('solopreneur')">‹</button>
               <button class="carousel-btn next" onclick="nextSlide('solopreneur')">›</button>
@@ -394,9 +397,10 @@
               <div class="dot" onclick="goToSlide('solopreneur',1)"></div>
               <div class="dot" onclick="goToSlide('solopreneur',2)"></div>
               <div class="dot" onclick="goToSlide('solopreneur',3)"></div>
+              <div class="dot" onclick="goToSlide('solopreneur',4)"></div>
             </div>
             <!-- Slide captions -->
-            <p id="caption-solopreneur" class="text-center text-xs text-slate-600 mt-1 italic">Landing page</p>
+            <p id="caption-solopreneur" class="text-center text-xs text-slate-600 mt-1 italic">Custom AI Teams — Built by Chat</p>
           </div>
         </div>
       </div>
@@ -974,7 +978,7 @@
 
     // ── Carousel
     const carousels = {
-      solopreneur: { current: 0, total: 4, captions: ['Landing page', 'AI team assembly', 'Agent dashboard', 'AI Marketer agent'] },
+      solopreneur: { current: 0, total: 5, captions: ['Custom AI Teams — Built by Chat', 'Kaggle competition dashboard', 'Agent knowledge base & data analysis', 'Team Builder — design your AI team', 'Pixel World — live agent visualization'] },
       diary: { current: 0, total: 6, captions: ['Landing page', 'Character chat (first response)', 'Conversation view', 'Generated diary entry', 'Diary calendar view', 'Mood insights & analytics'] }
     };
 
