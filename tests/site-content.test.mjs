@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
 const html = await readFile(new URL('index.html', root), 'utf8');
@@ -13,26 +13,30 @@ test('uses the agreed positioning and publication status', () => {
   assert.doesNotMatch(html, /20K\+/);
 });
 
-for (const repo of [
-  'agent-bridge-rs',
-  'agent-hook',
-  'agentflow',
-  'chrome-in-context-search',
-  'kaggle-team',
+for (const project of [
+  'Agent Bridge',
+  'Agent Hook',
+  'AgentFlow',
+  'In-Context Search',
+  'Kaggle Team',
   'jsfetch',
 ]) {
-  test(`links ${repo}`, () => {
-    assert.match(html, new RegExp(`https://github\\.com/Joyce0615/${repo}`));
+  test(`shows ${project}`, () => {
+    assert.match(html, new RegExp(project));
   });
 }
 
-test('project links are safe and descriptive', () => {
+test('links only repositories that are publicly reachable', () => {
+  assert.doesNotMatch(html, /github\.com\/Joyce0615\/(agentflow|agent-bridge-rs|agent-hook|kaggle-team)/);
+  assert.match(html, /https:\/\/github\.com\/Joyce0615\/chrome-in-context-search/);
+  assert.match(html, /https:\/\/github\.com\/Joyce0615\/jsfetch/);
+
   const links = [
     ...html.matchAll(
       /<a[^>]+href="https:\/\/github\.com\/Joyce0615\/[^\"]+"[^>]*>/g,
     ),
   ];
-  assert.ok(links.length >= 6);
+  assert.equal(links.length, 2);
   for (const [tag] of links) {
     assert.match(tag, /target="_blank"/);
     assert.match(tag, /rel="noopener noreferrer"/);
@@ -46,9 +50,16 @@ test('paper is forthcoming and has no manuscript link', () => {
   assert.doesNotMatch(html, /published at IEEE/i);
 });
 
-test('offers both tailored resumes', () => {
+test('offers both tailored resumes', async () => {
   assert.match(resumeHtml, /AI \/ LLM Systems/);
   assert.match(resumeHtml, /FDE \/ Applied AI/);
   assert.match(resumeHtml, /Dongjun_Xie_Resume_2026_AI_LLM_Systems\.pdf/);
   assert.match(resumeHtml, /Dongjun_Xie_Resume_2026_FDE_Applied_AI\.pdf/);
+
+  await access(
+    new URL('assets/resumes/Dongjun_Xie_Resume_2026_AI_LLM_Systems.pdf', root),
+  );
+  await access(
+    new URL('assets/resumes/Dongjun_Xie_Resume_2026_FDE_Applied_AI.pdf', root),
+  );
 });

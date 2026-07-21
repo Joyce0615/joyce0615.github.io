@@ -84,7 +84,7 @@ Retain the current static HTML architecture and dark visual identity. Improve ed
 
 ### Content rules
 
-- Link each public project to `https://github.com/Joyce0615/<repository>`.
+- Link each anonymously reachable public project to `https://github.com/Joyce0615/<repository>`. Keep private projects as portfolio case studies labeled `Private repository`; do not publish dead GitHub URLs or change repository visibility without Joyce's approval.
 - Base descriptions on repository evidence and existing resume source material.
 - Remove or replace unverifiable vanity statistics such as generic code-line or agent-count badges.
 - Use concrete engineering language: architecture, tools, boundaries, reliability mechanisms, and delivery outcomes.
