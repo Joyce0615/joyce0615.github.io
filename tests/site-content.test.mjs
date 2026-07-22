@@ -13,6 +13,18 @@ test('uses the agreed positioning and publication status', () => {
   assert.doesNotMatch(html, /20K\+/);
 });
 
+test('uses June Xie contact details without LinkedIn', () => {
+  for (const page of [html, resumeHtml]) {
+    assert.match(page, /June Xie/);
+    assert.doesNotMatch(page, /Joyce Xie|Dongjun Xie/i);
+    assert.doesNotMatch(page, /linkedin(?:\.com)?/i);
+  }
+
+  assert.match(html, /\+1-213-477-3071/);
+  assert.match(html, /tel:\+12134773071/);
+  assert.match(html, /mailto:joycexie0615@gmail\.com/);
+});
+
 for (const project of [
   'Agent Bridge',
   'Agent Hook',
@@ -53,13 +65,13 @@ test('paper is forthcoming and has no manuscript link', () => {
 test('offers both tailored resumes', async () => {
   assert.match(resumeHtml, /AI \/ LLM Systems/);
   assert.match(resumeHtml, /FDE \/ Applied AI/);
-  assert.match(resumeHtml, /Dongjun_Xie_Resume_2026_AI_LLM_Systems\.pdf/);
-  assert.match(resumeHtml, /Dongjun_Xie_Resume_2026_FDE_Applied_AI\.pdf/);
+  assert.match(resumeHtml, /June_Xie_Resume_2026_AI_LLM_Systems\.pdf/);
+  assert.match(resumeHtml, /June_Xie_Resume_2026_FDE_Applied_AI\.pdf/);
 
   await access(
-    new URL('assets/resumes/Dongjun_Xie_Resume_2026_AI_LLM_Systems.pdf', root),
+    new URL('assets/resumes/June_Xie_Resume_2026_AI_LLM_Systems.pdf', root),
   );
   await access(
-    new URL('assets/resumes/Dongjun_Xie_Resume_2026_FDE_Applied_AI.pdf', root),
+    new URL('assets/resumes/June_Xie_Resume_2026_FDE_Applied_AI.pdf', root),
   );
 });
