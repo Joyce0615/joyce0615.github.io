@@ -13,6 +13,27 @@ test('uses the agreed positioning and publication status', () => {
   assert.doesNotMatch(html, /20K\+/);
 });
 
+test('leads featured systems with the private-preview Trace flagship', async () => {
+  assert.match(html, /Four examples of taking an AI workflow beyond a demo/);
+  const traceCard = html.match(/<article[^>]+data-project="trace"[\s\S]*?<\/article>/)?.[0];
+  assert.ok(traceCard, 'Trace project card is missing');
+  assert.match(traceCard, /Trace/);
+  assert.match(traceCard, /Codebase Learning Studio/);
+  assert.match(traceCard, /desktop-first learning environment that turns unfamiliar repositories into adaptive, source-grounded courses/i);
+  assert.match(traceCard, /Private preview · GitHub release forthcoming/);
+  assert.doesNotMatch(traceCard, /<a\b|href=/);
+  assert.ok(html.indexOf('data-project="trace"') < html.indexOf('AgentFlow'));
+
+  for (const image of [
+    '01-welcome.png',
+    '03-skill-tree-and-guide.png',
+    '05-side-chat-context.png',
+  ]) {
+    assert.match(traceCard, new RegExp(`assets/trace/${image.replaceAll('.', '\\.')}`));
+    await access(new URL(`assets/trace/${image}`, root));
+  }
+});
+
 test('uses June Xie contact details without LinkedIn', () => {
   for (const page of [html, resumeHtml]) {
     assert.match(page, /June Xie/);
